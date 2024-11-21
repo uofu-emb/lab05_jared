@@ -13,7 +13,12 @@ bool timer_callback(__unused struct repeating_timer *t)
 
 int main(void)
 {
-    printf("In timer.c\n");
+    stdio_init_all();
+    // hard_assert(cyw43_arch_init() == PICO_OK);
+    while (1) {
+        sleep_ms(5000);
+        printf("Made it in timer.c\n");
+    }
     return 0;
 
     // stdio_init_all();

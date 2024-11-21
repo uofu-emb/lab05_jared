@@ -16,9 +16,14 @@
 
 int main(void)
 {
-    printf("In task_delay\n");
+    stdio_init_all();
+    // hard_assert(cyw43_arch_init() == PICO_OK);
+    while (1) {
+        sleep_ms(5000);
+        printf("Made it in task_delay.c\n");
+    }
     return 0;
-    
+
     // stdio_init_all();
     // gpio_init(OUT_PIN);
     // gpio_set_dir(OUT_PIN, GPIO_OUT);
