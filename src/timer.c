@@ -14,26 +14,18 @@ bool timer_callback(__unused struct repeating_timer *t)
 int main(void)
 {
     stdio_init_all();
-    // hard_assert(cyw43_arch_init() == PICO_OK);
-    while (1) {
-        sleep_ms(5000);
-        printf("Made it in timer.c\n");
-    }
+    // Create a repeating timer that calls timer_callback.
+    // If the delay is > 0 then this is the delay between the previous
+    // callback ending and the next starting.
+    // If the delay is negative (see below) then the next call to the
+    // callback will be exactly 500ms after the start of the call to
+    // the last callback
+    repeating_timer_t timer;
+    gpio_init(OUT_PIN);
+    gpio_set_dir(OUT_PIN, GPIO_OUT);
+    gpio_put(OUT_PIN, toggle);
+
+    add_repeating_timer_ms(-DELAY_MS, timer_callback, NULL, &timer);
+    while(1) __nop();
     return 0;
-
-    // stdio_init_all();
-    // // Create a repeating timer that calls timer_callback.
-    // // If the delay is > 0 then this is the delay between the previous
-    // // callback ending and the next starting.
-    // // If the delay is negative (see below) then the next call to the
-    // // callback will be exactly 500ms after the start of the call to
-    // // the last callback
-    // repeating_timer_t timer;
-    // gpio_init(OUT_PIN);
-    // gpio_set_dir(OUT_PIN, GPIO_OUT);
-    // gpio_put(OUT_PIN, toggle);
-
-    // add_repeating_timer_ms(-DELAY_MS, timer_callback, NULL, &timer);
-    // while(1) __nop();
-    // return 0;
 }
